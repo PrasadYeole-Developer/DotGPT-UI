@@ -1,8 +1,36 @@
+import { createChat } from "../../services/chat.service";
+import { useChatStore } from "../../store/chat.store";
+
 export function Sidebar() {
+    const {
+        chats,
+        setChats,
+        setActiveChat,
+    } = useChatStore();
+    const handleCreateChat = async () => {
+        try {
+            const response = await createChat(
+                "New Chat",
+            );
+
+            setChats([
+                response.chat,
+                ...chats,
+            ]);
+
+            setActiveChat(response.chat);
+
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <aside className="flex w-72 flex-col border-r border-zinc-800 bg-zinc-900">
             <div className="border-b border-zinc-800 p-4">
-                <button className="w-full rounded-lg bg-white px-4 py-3 font-medium text-black transition-all hover:opacity-90">
+                <button
+                    onClick={handleCreateChat}
+                    className="w-full rounded-lg bg-white px-4 py-3 font-medium text-black transition-all hover:opacity-90">
                     + New Chat
                 </button>
             </div>
