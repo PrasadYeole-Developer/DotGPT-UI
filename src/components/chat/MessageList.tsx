@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useChatStore } from "../../store/chat.store";
 
 export function MessageList() {
-    const { messages } = useChatStore();
+    const { messages, isAiThinking } = useChatStore();
     const bottomRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         bottomRef.current?.scrollIntoView({
@@ -37,6 +37,13 @@ export function MessageList() {
                         </div>
                     </div>
                 ))
+            )}
+            {isAiThinking && (
+                <div className="flex justify-start">
+                    <div className="rounded-2xl bg-zinc-800 px-4 py-3 text-sm text-zinc-400">
+                        AI is thinking...
+                    </div>
+                </div>
             )}
             <div ref={bottomRef} />
         </div>

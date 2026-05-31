@@ -6,11 +6,12 @@ import { socket } from "../services/socket";
 import { useChatStore } from "../store/chat.store";
 
 export function ChatPage() {
-    const { addMessage } = useChatStore();
+    const { addMessage, setIsAiThinking } = useChatStore();
     useEffect(() => {
         socket.on(
             "ai-response",
             (message) => {
+                setIsAiThinking(false);
                 addMessage({
                     chat: message.chat,
                     content: message.content,

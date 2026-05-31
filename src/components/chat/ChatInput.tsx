@@ -7,6 +7,7 @@ export function ChatInput() {
     const {
         activeChat,
         addMessage,
+        setIsAiThinking,
     } = useChatStore();
 
     const handleSendMessage = (
@@ -31,7 +32,7 @@ export function ChatInput() {
             ...messagePayload,
             role: "user",
         });
-
+        setIsAiThinking(true);
         socket.emit(
             "ai-message",
             messagePayload,
