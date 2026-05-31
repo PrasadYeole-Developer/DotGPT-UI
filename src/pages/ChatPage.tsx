@@ -1,8 +1,28 @@
+import { useEffect } from "react";
 import { ChatInput } from "../components/chat/ChatInput";
 import { MessageList } from "../components/chat/MessageList";
 import { Sidebar } from "../components/chat/Sidebar"
+import { socket } from "../services/socket";
+import { useChatStore } from "../store/chat.store";
 
 export function ChatPage() {
+    const { addMessage } = useChatStore();
+    useEffect(() => {
+        socket.on(
+            "ai-response",
+            (message) => {
+                addMessage({
+                    chat: message.chat,
+                    content: message.content,
+                    role: "model",
+                });
+            },
+        );
+
+        return () => {
+            socket.off("ai-response");
+        };
+    }, [addMessage]);
     return (
         <div className="flex h-screen bg-zinc-950 text-white">
             <Sidebar />

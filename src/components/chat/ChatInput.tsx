@@ -17,6 +17,7 @@ export function ChatInput() {
         if (!message.trim()) {
             return;
         }
+        console.log(activeChat);
 
         if (!activeChat) {
             return;
