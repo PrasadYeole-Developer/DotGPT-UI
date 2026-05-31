@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useChatStore } from "../../store/chat.store";
+import { socket } from "../../services/socket";
 
 export function ChatInput() {
     const [message, setMessage] = useState<string>("");
@@ -20,12 +21,20 @@ export function ChatInput() {
         if (!activeChat) {
             return;
         }
-
-        addMessage({
+        const messagePayload = {
             chat: activeChat.id,
             content: message,
+        };
+
+        addMessage({
+            ...messagePayload,
             role: "user",
         });
+
+        socket.emit(
+            "ai-message",
+            messagePayload,
+        );
 
         setMessage("");
     };
