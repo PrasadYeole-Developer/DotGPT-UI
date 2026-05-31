@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 import { LoginPage } from './pages/auth/LoginPage'
+import { ChatPage } from './pages/ChatPage'
 
 const rootElement = document.getElementById("root");
 
@@ -26,6 +27,10 @@ createRoot(rootElement).render(
         <Route
           path="/login"
           element={<LoginPage />}
+        />
+        <Route
+          path="/chat"
+          element={<ChatPage />}
         />
       </Routes>
     </BrowserRouter>
