@@ -6,6 +6,7 @@ import { useAuthStore } from "../../store/auth.store";
 import { loginUser } from "../../services/auth.service";
 import type { LoginPayload } from "../../types/auth.types";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
     const [formData, setFormData] = useState<LoginPayload>({
@@ -13,6 +14,7 @@ export function LoginPage() {
         password: "",
     });
     const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
     const handleLogin = async (
         e: React.FormEvent<HTMLFormElement>,
     ) => {
@@ -28,6 +30,7 @@ export function LoginPage() {
             });
 
             setUser(response.user);
+            navigate("/chat");
 
             console.log(response);
         } catch (error) {
