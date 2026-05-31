@@ -5,9 +5,12 @@ import { useAuthStore } from "../../store/auth.store";
 import { useChatStore } from "../../store/chat.store";
 import { socket } from "../../services/socket";
 import { logoutUser } from "../../services/auth.service";
+import { useState } from "react";
 
 export function Sidebar() {
     const navigate = useNavigate();
+    const [isCreatingChat, setIsCreatingChat] = useState<boolean>(false);
+    const [chatTitle, setChatTitle] = useState<string>("");
     const {
         chats,
         activeChat,
@@ -16,25 +19,26 @@ export function Sidebar() {
         setMessages,
     } = useChatStore();
     const { user, setUser } = useAuthStore();
-    const handleCreateChat = async () => {
-        try {
-            const response = await createChat(
-                "New Chat",
-            );
+    
+    // const handleCreateChat = async () => {
+    //     try {
+    //         const response = await createChat(
+    //             "New Chat",
+    //         );
 
-            setChats([
-                response.chat,
-                ...chats,
-            ]);
+    //         setChats([
+    //             response.chat,
+    //             ...chats,
+    //         ]);
 
-            setActiveChat(response.chat);
-            setMessages([]);
+    //         setActiveChat(response.chat);
+    //         setMessages([]);
 
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //         console.log(response);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     const handleLogout = async () => {
         try {
@@ -59,11 +63,62 @@ export function Sidebar() {
     return (
         <aside className="flex w-72 flex-col border-r border-zinc-800 bg-zinc-900">
             <div className="border-b border-zinc-800 p-4">
-                <button
-                    onClick={handleCreateChat}
-                    className="w-full rounded-lg bg-white px-4 py-3 font-medium text-black transition-all hover:opacity-90">
-                    + New Chat
-                </button>
+                {isCreatingChat ? (
+                    <input
+                        autoFocus
+                        type="text"
+                        placeholder="Enter chat title..."
+                        value={chatTitle}
+                        onChange={(e) =>
+                            setChatTitle(e.target.value)
+                        }
+                        onKeyDown={async (e) => {
+                            if (e.key !== "Enter") {
+                                return;
+                            }
+
+                            if (!chatTitle.trim()) {
+                                return;
+                            }
+
+                            try {
+                                const response =
+                                    await createChat(
+                                        chatTitle,
+                                    );
+
+                                setChats([
+                                    response.chat,
+                                    ...chats,
+                                ]);
+
+                                setActiveChat(
+                                    response.chat,
+                                );
+
+                                setMessages([]);
+
+                                setChatTitle("");
+
+                                setIsCreatingChat(
+                                    false,
+                                );
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }}
+                        className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-zinc-500"
+                    />
+                ) : (
+                    <button
+                        onClick={() =>
+                            setIsCreatingChat(true)
+                        }
+                        className="w-full rounded-lg bg-white px-4 py-3 font-medium text-black transition-all hover:opacity-90"
+                    >
+                        + New Chat
+                    </button>
+                )}
             </div>
 
             <div className="flex-1 overflow-y-auto p-3">
