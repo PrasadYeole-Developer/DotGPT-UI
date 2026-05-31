@@ -1,23 +1,28 @@
 interface AuthButtonProps {
-    text: string;
-
-    type?: "button" | "submit";
-
-    isLoading?: boolean;
+  text: string;
+  type?: "button" | "submit";
+  isLoading?: boolean;
 }
 
 export function AuthButton({
-    text,
-    type = "submit",
-    isLoading = false,
+  text,
+  type = "submit",
+  isLoading = false,
 }: AuthButtonProps) {
-    return (
-        <button
-            type={type}
-            disabled={isLoading}
-            className="w-full rounded-lg bg-white py-3 font-medium text-black transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-            {isLoading ? "Loading..." : text}
-        </button>
-    );
+  return (
+    <button
+      type={type}
+      disabled={isLoading}
+      className="w-full btn-primary-white py-3 text-base font-semibold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200"
+    >
+      {isLoading ? (
+        <span className="flex items-center justify-center gap-2">
+          <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+          Loading...
+        </span>
+      ) : (
+        text
+      )}
+    </button>
+  );
 }

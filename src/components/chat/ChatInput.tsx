@@ -3,70 +3,73 @@ import { useChatStore } from "../../store/chat.store";
 import { socket } from "../../services/socket";
 
 export function ChatInput() {
-    const [message, setMessage] = useState<string>("");
-    const {
-        activeChat,
-        addMessage,
-        isAiThinking,
-        setIsAiThinking,
-    } = useChatStore();
+  const [message, setMessage] = useState<string>("");
+  const { activeChat, addMessage, isAiThinking, setIsAiThinking } =
+    useChatStore();
 
-    const handleSendMessage = (
-        e: React.FormEvent<HTMLFormElement>,
-    ) => {
-        e.preventDefault();
+  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        if (!message.trim()) {
-            return;
-        }
-        console.log(activeChat);
+    if (!message.trim()) {
+      return;
+    }
 
-        if (!activeChat) {
-            return;
-        }
-        const messagePayload = {
-            chat: activeChat.id,
-            content: message,
-        };
+    if (!activeChat) {
+      return;
+    }
 
-        addMessage({
-            ...messagePayload,
-            role: "user",
-        });
-        setIsAiThinking(true);
-        socket.emit(
-            "ai-message",
-            messagePayload,
-        );
-
-        setMessage("");
+    const messagePayload = {
+      chat: activeChat.id,
+      content: message,
     };
 
-    return (
-        <form
-            onSubmit={handleSendMessage}
-            className="border-t border-zinc-800 p-4"
-        >
-            <div className="flex items-end gap-3 rounded-2xl border border-zinc-700 bg-zinc-900 p-3">
-                <textarea
-                    rows={1}
-                    placeholder="Message AI..."
-                    value={message}
-                    onChange={(e) =>
-                        setMessage(e.target.value)
-                    }
-                    disabled={isAiThinking}
-                    className="max-h-40 flex-1 resize-none bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
-                />
+    addMessage({
+      ...messagePayload,
+      role: "user",
+    });
+    setIsAiThinking(true);
+    socket.emit("ai-message", messagePayload);
+    setMessage("");
+  };
 
-                <button
-                    type="submit"
-                    disabled={isAiThinking}
-                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    {isAiThinking ? "Thinking..." : "Send"}
-                </button>
-            </div>
-        </form>
-    );
+  return (
+    <form
+      onSubmit={handleSendMessage}
+      className="border-t border-slate-800/50 backdrop-blur-sm p-6"
+    >
+      <div className="flex items-end gap-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 p-4 focus-within:border-cyan-500/50 transition-colors duration-200">
+        <textarea
+          rows={1}
+          placeholder="Message AI..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          disabled={isAiThinking}
+          className="max-h-40 flex-1 resize-none bg-transparent text-base text-white outline-none placeholder:text-slate-500 font-medium disabled:opacity-50"
+        />
+
+        <button
+          type="submit"
+          disabled={isAiThinking || !message.trim()}
+          className="btn-primary-cyan px-6 py-2.5 text-base font-semibold shadow-lg shadow-cyan-600/20 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+        >
+          {isAiThinking ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Sending</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z" />
+              </svg>
+              <span>Send</span>
+            </>
+          )}
+        </button>
+      </div>
+      <p className="text-xs text-slate-500 mt-3 text-center">
+        Press Enter to send • Shift+Enter for new line
+      </p>
+    </form>
+  );
 }

@@ -1,28 +1,25 @@
 import { Link } from "react-router-dom";
 
 interface AuthRedirectLinkProps {
-    text: string;
-
-    linkText: string;
-
-    to: string;
+  text: string;
+  linkText: string;
+  to: string;
 }
 
 export function AuthRedirectLink({
-    text,
-    linkText,
-    to,
+  text,
+  linkText,
+  to,
 }: AuthRedirectLinkProps) {
-    return (
-        <p className="mt-6 text-center text-sm text-zinc-400">
-            {text}{" "}
-
-            <Link
-                to={to}
-                className="font-medium text-white transition-all hover:opacity-80"
-            >
-                {linkText}
-            </Link>
-        </p>
-    );
+  return (
+    <p className="text-center text-sm text-slate-400 mt-6">
+      {text}{" "}
+      <Link
+        to={to}
+        className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-200"
+      >
+        {linkText}
+      </Link>
+    </p>
+  );
 }
