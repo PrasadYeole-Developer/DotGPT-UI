@@ -1,4 +1,5 @@
 import { createChat } from "../../services/chat.service";
+import { getMessagesByChat } from "../../services/message.service";
 import { useChatStore } from "../../store/chat.store";
 
 export function Sidebar() {
@@ -42,12 +43,23 @@ export function Sidebar() {
                     {chats.map((chat) => (
                         <button
                             key={chat.id}
-                            onClick={() => {
+                            onClick={async () => {
                                 if (activeChat?.id === chat.id) {
                                     return;
                                 }
-                                setActiveChat(chat);
-                                setMessages([]);
+
+                                try {
+                                    setActiveChat(chat);
+
+                                    const response =
+                                        await getMessagesByChat(
+                                            chat.id,
+                                        );
+
+                                    setMessages(response.messages);
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }}
                             className={`w-full rounded-lg px-3 py-3 text-left text-sm transition-all hover:bg-zinc-800 ${activeChat?.id === chat.id
                                 ? "bg-zinc-800 text-white"
