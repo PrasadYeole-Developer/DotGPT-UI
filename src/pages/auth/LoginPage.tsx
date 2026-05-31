@@ -1,7 +1,13 @@
+import { useState } from "react";
+import { AuthButton } from "../../components/auth/AuthButton";
 import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
 
 export function LoginPage() {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
             <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg">
@@ -20,20 +26,29 @@ export function LoginPage() {
                         label="Email"
                         type="email"
                         placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                email: e.target.value,
+                            })
+                        }
                     />
 
                     <AuthInput
                         label="Password"
                         type="password"
                         placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                password: e.target.value,
+                            })
+                        }
                     />
 
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-white py-3 font-medium text-black transition-all hover:opacity-90"
-                    >
-                        Login
-                    </button>
+                    <AuthButton text="Login" />
                 </form>
                 <AuthRedirectLink
                     text="Don't have an account?"

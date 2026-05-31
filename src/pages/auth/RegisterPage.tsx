@@ -1,7 +1,15 @@
+import { useState } from "react";
+import { AuthButton } from "../../components/auth/AuthButton";
 import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
 
 export function RegisterPage() {
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    });
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
             <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg">
@@ -21,12 +29,26 @@ export function RegisterPage() {
                             label="First Name"
                             type="text"
                             placeholder="John"
+                            value={formData.firstName}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    firstName: e.target.value,
+                                })
+                            }
                         />
 
                         <AuthInput
                             label="Last Name"
                             type="text"
                             placeholder="Doe"
+                            value={formData.lastName}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    lastName: e.target.value,
+                                })
+                            }
                         />
                     </div>
 
@@ -34,20 +56,29 @@ export function RegisterPage() {
                         label="Email"
                         type="email"
                         placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                email: e.target.value,
+                            })
+                        }
                     />
 
                     <AuthInput
                         label="Password"
                         type="password"
                         placeholder="Create a password"
+                        value={formData.password}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                password: e.target.value,
+                            })
+                        }
                     />
 
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-white py-3 font-medium text-black transition-all hover:opacity-90"
-                    >
-                        Register
-                    </button>
+                    <AuthButton text="Login" />
                 </form>
                 <AuthRedirectLink
                     text="Don't have an account?"

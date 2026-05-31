@@ -4,12 +4,20 @@ interface AuthInputProps {
     type: string;
   
     placeholder: string;
+  
+    value: string;
+  
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement>,
+    ) => void;
   }
   
   export function AuthInput({
     label,
     type,
     placeholder,
+    value,
+    onChange,
   }: AuthInputProps) {
     return (
       <div>
@@ -20,6 +28,8 @@ interface AuthInputProps {
         <input
           type={type}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
         />
       </div>
