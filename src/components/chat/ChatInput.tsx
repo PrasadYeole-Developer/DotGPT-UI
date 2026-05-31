@@ -50,7 +50,7 @@ export function ChatInput() {
         <button
           type="submit"
           disabled={isAiThinking || !message.trim()}
-          className="btn-primary-cyan px-6 py-2.5 text-base font-semibold shadow-lg shadow-cyan-600/20 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="btn-primary-cyan px-6 py-2.5 text-base font-semibold shadow-lg shadow-cyan-600/20 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
         >
           {isAiThinking ? (
             <>

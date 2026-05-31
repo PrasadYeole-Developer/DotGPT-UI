@@ -42,10 +42,10 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-8">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-8">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-t from-cyan-600/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-linear-to-t from-cyan-600/10 to-transparent rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-md">
@@ -54,7 +54,7 @@ export function RegisterPage() {
           {/* Header */}
           <div className="space-y-4 text-center">
             <div className="flex justify-center">
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-2xl">
+              <div className="inline-flex items-center justify-center w-14 h-14 bg-linear-to-br from-cyan-600 to-cyan-700 rounded-2xl">
                 <svg
                   className="w-7 h-7 text-white"
                   fill="none"

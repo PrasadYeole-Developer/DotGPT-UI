@@ -16,7 +16,7 @@ export function AuthRedirectLink({
       {text}{" "}
       <Link
         to={to}
-        className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-200"
+        className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-200 cursor-pointer"
       >
         {linkText}
       </Link>

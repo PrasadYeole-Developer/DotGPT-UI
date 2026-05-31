@@ -92,7 +92,7 @@ export function Sidebar() {
             />
             <button
               onClick={handleCreateNewChat}
-              className="px-3 py-2 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 transition-colors"
+              className="px-3 py-2 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 transition-colors cursor-pointer"
             >
               ✓
             </button>
@@ -100,7 +100,7 @@ export function Sidebar() {
         ) : (
           <button
             onClick={() => setIsCreatingChat(true)}
-            className="w-full btn-primary-white py-2.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
+            className="w-full btn-primary-white py-2.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all cursor-pointer"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5m-15-4h12m-12 4v8m0-8l2-2m-2 2l-2-2" />
@@ -122,7 +122,7 @@ export function Sidebar() {
             <button
               key={chat.id}
               onClick={() => handleSelectChat(chat.id)}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate ${
+              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${
                 activeChat?.id === chat.id
                   ? "bg-cyan-600/20 border border-cyan-500/30 text-cyan-300"
                   : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-300"
@@ -149,7 +149,7 @@ export function Sidebar() {
 
           <button
             onClick={handleLogout}
-            className="w-full px-3 py-2 rounded-lg bg-red-600/20 border border-red-500/30 text-red-400 text-sm font-medium hover:bg-red-600/30 transition-colors flex items-center justify-center gap-2"
+            className="w-full px-3 py-2 rounded-lg bg-red-600/20 border border-red-500/30 text-red-400 text-sm font-medium hover:bg-red-600/30 transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path

@@ -44,7 +44,7 @@ export function MessageList() {
             }`}
           >
             {message.role === "model" && (
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-600 to-cyan-700 flex items-center justify-center flex-shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-lg bg-linear-to-br from-cyan-600 to-cyan-700 flex items-center justify-center shrink-0 mt-1">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="currentColor"
@@ -57,7 +57,7 @@ export function MessageList() {
             <div
               className={`max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${
                 message.role === "user"
-                  ? "bg-gradient-to-r from-cyan-600 to-cyan-700 text-white shadow-lg shadow-cyan-600/20 rounded-br-none"
+                  ? "bg-linear-to-r from-cyan-600 to-cyan-700 text-white shadow-lg shadow-cyan-600/20 rounded-br-none"
                   : "bg-slate-800/50 border border-slate-700/50 text-slate-100 rounded-bl-none"
               }`}
             >
@@ -69,7 +69,7 @@ export function MessageList() {
 
       {isAiThinking && (
         <div className="flex justify-start gap-4">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-600 to-cyan-700 flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-cyan-600 to-cyan-700 flex items-center justify-center shrink-0">
             <svg
               className="w-5 h-5 text-white"
               fill="currentColor"
