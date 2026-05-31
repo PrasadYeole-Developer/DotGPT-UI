@@ -7,6 +7,7 @@ import { loginUser } from "../../services/auth.service";
 import type { LoginPayload } from "../../types/auth.types";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../../services/socket";
 
 export function LoginPage() {
     const [formData, setFormData] = useState<LoginPayload>({
@@ -30,6 +31,7 @@ export function LoginPage() {
             });
 
             setUser(response.user);
+            socket.connect();
             navigate("/chat");
 
             console.log(response);
