@@ -1,6 +1,10 @@
+import { ChatInput } from "../components/chat/ChatInput";
+import { Sidebar } from "../components/chat/Sidebar"
+
 export function ChatPage() {
     return (
         <div className="flex h-screen bg-zinc-950 text-white">
+            <Sidebar />
             <div className="flex flex-1 flex-col">
                 <header className="border-b border-zinc-800 px-6 py-4">
                     <h1 className="text-lg font-semibold">
@@ -13,6 +17,7 @@ export function ChatPage() {
                         Start a conversation
                     </h2>
                 </main>
+                <ChatInput />
             </div>
         </div>
     );
