@@ -4,6 +4,8 @@ import './index.css'
 import { App } from './App'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
+import { RegisterPage } from './pages/auth/RegisterPage'
+import { LoginPage } from './pages/auth/LoginPage'
 
 const rootElement = document.getElementById("root");
 
@@ -17,6 +19,14 @@ createRoot(rootElement).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={<RegisterPage />}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
