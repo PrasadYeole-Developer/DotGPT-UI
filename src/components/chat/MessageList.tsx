@@ -1,7 +1,14 @@
+import { useEffect, useRef } from "react";
 import { useChatStore } from "../../store/chat.store";
 
 export function MessageList() {
     const { messages } = useChatStore();
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({
+            behavior: "smooth",
+        });
+    }, [messages]);
 
     return (
         <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-8">
@@ -16,14 +23,14 @@ export function MessageList() {
                     <div
                         key={index}
                         className={`flex ${message.role === "user"
-                                ? "justify-end"
-                                : "justify-start"
+                            ? "justify-end"
+                            : "justify-start"
                             }`}
                     >
                         <div
                             className={`max-w-3xl rounded-2xl px-4 py-3 text-sm leading-7 ${message.role === "user"
-                                    ? "bg-white text-black"
-                                    : "bg-zinc-800 text-white"
+                                ? "bg-white text-black"
+                                : "bg-zinc-800 text-white"
                                 }`}
                         >
                             {message.content}
@@ -31,6 +38,7 @@ export function MessageList() {
                     </div>
                 ))
             )}
+            <div ref={bottomRef} />
         </div>
     );
 }
