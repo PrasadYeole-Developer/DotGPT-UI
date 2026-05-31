@@ -7,6 +7,7 @@ export function Sidebar() {
         activeChat,
         setChats,
         setActiveChat,
+        setMessages,
     } = useChatStore();
     const handleCreateChat = async () => {
         try {
@@ -41,12 +42,13 @@ export function Sidebar() {
                     {chats.map((chat) => (
                         <button
                             key={chat.id}
-                            onClick={() =>
-                                setActiveChat(chat)
-                            }
+                            onClick={() => {
+                                setActiveChat(chat);
+                                setMessages([]);
+                            }}
                             className={`w-full rounded-lg px-3 py-3 text-left text-sm transition-all hover:bg-zinc-800 ${activeChat?.id === chat.id
-                                    ? "bg-zinc-800 text-white"
-                                    : "text-zinc-300"
+                                ? "bg-zinc-800 text-white"
+                                : "text-zinc-300"
                                 }`}                        >
                             {chat.title}
                         </button>
@@ -65,6 +67,6 @@ export function Sidebar() {
                     </p>
                 </div>
             </div>
-        </aside>
+        </aside >
     );
 }
