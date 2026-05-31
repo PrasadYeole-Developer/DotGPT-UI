@@ -4,6 +4,7 @@ import { useChatStore } from "../../store/chat.store";
 export function Sidebar() {
     const {
         chats,
+        activeChat,
         setChats,
         setActiveChat,
     } = useChatStore();
@@ -37,17 +38,19 @@ export function Sidebar() {
 
             <div className="flex-1 overflow-y-auto p-3">
                 <div className="space-y-2">
-                    <button className="w-full rounded-lg px-3 py-3 text-left text-sm text-zinc-300 transition-all hover:bg-zinc-800">
-                        AI Chat About React
-                    </button>
-
-                    <button className="w-full rounded-lg px-3 py-3 text-left text-sm text-zinc-300 transition-all hover:bg-zinc-800">
-                        Node.js Discussion
-                    </button>
-
-                    <button className="w-full rounded-lg px-3 py-3 text-left text-sm text-zinc-300 transition-all hover:bg-zinc-800">
-                        Gemini API Learning
-                    </button>
+                    {chats.map((chat) => (
+                        <button
+                            key={chat.id}
+                            onClick={() =>
+                                setActiveChat(chat)
+                            }
+                            className={`w-full rounded-lg px-3 py-3 text-left text-sm transition-all hover:bg-zinc-800 ${activeChat?.id === chat.id
+                                    ? "bg-zinc-800 text-white"
+                                    : "text-zinc-300"
+                                }`}                        >
+                            {chat.title}
+                        </button>
+                    ))}
                 </div>
             </div>
 
