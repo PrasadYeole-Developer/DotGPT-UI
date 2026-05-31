@@ -22,6 +22,7 @@ export function Sidebar() {
             ]);
 
             setActiveChat(response.chat);
+            setMessages([]);
 
             console.log(response);
         } catch (error) {
