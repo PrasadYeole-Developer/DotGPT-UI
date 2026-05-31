@@ -7,6 +7,7 @@ export function ChatInput() {
     const {
         activeChat,
         addMessage,
+        isAiThinking,
         setIsAiThinking,
     } = useChatStore();
 
@@ -54,14 +55,16 @@ export function ChatInput() {
                     onChange={(e) =>
                         setMessage(e.target.value)
                     }
+                    disabled={isAiThinking}
                     className="max-h-40 flex-1 resize-none bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
                 />
 
                 <button
                     type="submit"
-                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:opacity-90"
+                    disabled={isAiThinking}
+                    className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                    Send
+                    {isAiThinking ? "Thinking..." : "Send"}
                 </button>
             </div>
         </form>
