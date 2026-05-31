@@ -15,7 +15,7 @@ export function AuthInput({
 }: AuthInputProps) {
   return (
     <div className="space-y-2.5">
-      <label className="block text-sm font-medium text-slate-300">
+      <label className="block text-sm font-medium" style={{ color: "#C9D6DF" }}>
         {label}
       </label>
       <input
@@ -23,7 +23,20 @@ export function AuthInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full px-4 py-3 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder:text-slate-500 transition-all duration-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 outline-none"
+        className="w-full px-4 py-3 rounded-lg text-white placeholder:text-[#52616B] transition-all duration-200 outline-none"
+        style={{
+          backgroundColor: "rgba(82, 97, 107, 0.2)",
+          borderColor: "#52616B",
+          borderWidth: "1px",
+        }}
+        onFocus={(e) => {
+          e.currentTarget.style.borderColor = "#52616B";
+          e.currentTarget.style.boxShadow = "0 0 0 2px rgba(82, 97, 107, 0.3)";
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.borderColor = "#52616B";
+          e.currentTarget.style.boxShadow = "none";
+        }}
       />
     </div>
   );

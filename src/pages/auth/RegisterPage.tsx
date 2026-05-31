@@ -42,24 +42,37 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-8">
+    <div
+      className="flex min-h-screen items-center justify-center px-4 py-8"
+      style={{ backgroundColor: "#1E2022" }}
+    >
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-linear-to-t from-cyan-600/10 to-transparent rounded-full blur-3xl" />
+        <div
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full blur-3xl"
+          style={{
+            backgroundImage:
+              "linear-gradient(to top, rgba(82, 97, 107, 0.1), transparent)",
+          }}
+        />
       </div>
 
       <div className="w-full max-w-md">
         {/* Card */}
-        <div className="glass border-slate-800/50 rounded-3xl p-8 space-y-8">
+        <div className="glass rounded-3xl p-8 space-y-8">
           {/* Header */}
           <div className="space-y-4 text-center">
             <div className="flex justify-center">
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-linear-to-br from-cyan-600 to-cyan-700 rounded-2xl">
+              <div
+                className="inline-flex items-center justify-center w-14 h-14 rounded-2xl"
+                style={{ backgroundColor: "#52616B" }}
+              >
                 <svg
-                  className="w-7 h-7 text-white"
+                  className="w-7 h-7"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  style={{ color: "#F0F5F9" }}
                 >
                   <path
                     strokeLinecap="round"
@@ -70,8 +83,10 @@ export function RegisterPage() {
                 </svg>
               </div>
             </div>
-            <h1 className="text-3xl font-bold text-white">Create Account</h1>
-            <p className="text-slate-400 font-light">
+            <h1 className="text-3xl font-bold" style={{ color: "#F0F5F9" }}>
+              Create Account
+            </h1>
+            <p className="font-light" style={{ color: "#C9D6DF" }}>
               Join and start chatting with AI today
             </p>
           </div>
@@ -122,8 +137,17 @@ export function RegisterPage() {
             />
 
             {error && (
-              <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3">
-                <p className="text-sm text-red-400 font-medium">{error}</p>
+              <div
+                className="rounded-lg px-4 py-3"
+                style={{
+                  backgroundColor: "rgba(239, 68, 68, 0.1)",
+                  borderColor: "rgba(239, 68, 68, 0.3)",
+                  borderWidth: "1px",
+                }}
+              >
+                <p className="text-sm font-medium" style={{ color: "#FF6B6B" }}>
+                  {error}
+                </p>
               </div>
             )}
 
@@ -133,10 +157,21 @@ export function RegisterPage() {
           {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-700" />
+              <div
+                className="w-full"
+                style={{ borderTopColor: "#52616B", borderTopWidth: "1px" }}
+              />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-slate-900/50 text-slate-500">or</span>
+              <span
+                className="px-2"
+                style={{
+                  backgroundColor: "rgba(30, 32, 34, 0.8)",
+                  color: "#52616B",
+                }}
+              >
+                or
+              </span>
             </div>
           </div>
 

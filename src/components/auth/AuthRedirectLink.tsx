@@ -12,11 +12,18 @@ export function AuthRedirectLink({
   to,
 }: AuthRedirectLinkProps) {
   return (
-    <p className="text-center text-sm text-slate-400 mt-6">
+    <p className="text-center text-sm mt-6" style={{ color: "#C9D6DF" }}>
       {text}{" "}
       <Link
         to={to}
-        className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-200 cursor-pointer"
+        className="font-semibold transition-colors duration-200 cursor-pointer"
+        style={{ color: "#52616B" }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = "#6B7D8A";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = "#52616B";
+        }}
       >
         {linkText}
       </Link>

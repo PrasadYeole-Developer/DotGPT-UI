@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+:root {
+  --color-dark: #1E2022;
+  --color-gray: #52616B;
+  --color-light: #C9D6DF;
+  --color-lighter: #F0F5F9;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -15,7 +22,9 @@
   }
 
   body {
-    @apply bg-slate-950 text-slate-50 antialiased;
+    background-color: #1E2022;
+    color: #F0F5F9;
+    @apply antialiased;
     font-family:
       -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
       Arial, sans-serif;
@@ -40,22 +49,27 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-slate-900;
+    background-color: #1E2022;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-700 rounded-full;
+    background-color: #52616B;
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-600;
+    background-color: #6B7D8A;
   }
 }
 
 @layer components {
   /* Input focus states */
   .input-focus {
-    @apply focus:ring-2 focus:ring-cyan-500 focus:ring-offset-0 focus:border-transparent;
+    @apply focus:ring-2 focus:ring-offset-0 focus:border-transparent;
+    focus-within: {
+      border-color: #52616B;
+      box-shadow: 0 0 0 2px rgba(82, 97, 107, 0.3);
+    }
   }
 
   /* Button variants */
@@ -63,16 +77,40 @@
     @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .btn-primary-cyan {
-    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-cyan-600 text-white hover:bg-cyan-700 active:bg-cyan-800;
+  .btn-primary-accent {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    background-color: #52616B;
+    color: #F0F5F9;
+    border: 1px solid #52616B;
   }
 
-  .btn-primary-white {
-    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-slate-950 hover:bg-slate-50 active:bg-slate-100;
+  .btn-primary-accent:hover {
+    background-color: #6B7D8A;
+    border-color: #6B7D8A;
+  }
+
+  .btn-primary-accent:active {
+    background-color: #3E4A54;
+  }
+
+  .btn-primary-light {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    background-color: #F0F5F9;
+    color: #1E2022;
+  }
+
+  .btn-primary-light:hover {
+    background-color: #E6ECEF;
+  }
+
+  .btn-primary-light:active {
+    background-color: #D9E2E8;
   }
 
   /* Glass effect */
   .glass {
-    @apply bg-slate-900/50 backdrop-blur-sm border border-slate-800/50;
+    background-color: rgba(30, 32, 34, 0.5);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(82, 97, 107, 0.3);
   }
 }

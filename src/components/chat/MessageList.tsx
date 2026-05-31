@@ -13,12 +13,16 @@ export function MessageList() {
     <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-8 py-8 scroll-smooth">
       {messages.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-4 py-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-cyan-600/20 rounded-2xl">
+          <div
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl"
+            style={{ backgroundColor: "rgba(82, 97, 107, 0.2)" }}
+          >
             <svg
-              className="w-8 h-8 text-cyan-400"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              style={{ color: "#52616B" }}
             >
               <path
                 strokeLinecap="round"
@@ -28,10 +32,10 @@ export function MessageList() {
               />
             </svg>
           </div>
-          <h2 className="text-2xl font-semibold text-slate-300">
+          <h2 className="text-2xl font-semibold" style={{ color: "#C9D6DF" }}>
             Start a conversation
           </h2>
-          <p className="text-slate-500 text-center max-w-xs">
+          <p className="text-center max-w-xs" style={{ color: "#52616B" }}>
             Ask me anything and I'll help you out
           </p>
         </div>
@@ -44,11 +48,15 @@ export function MessageList() {
             }`}
           >
             {message.role === "model" && (
-              <div className="w-8 h-8 rounded-lg bg-linear-to-br from-cyan-600 to-cyan-700 flex items-center justify-center shrink-0 mt-1">
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-1"
+                style={{ backgroundColor: "#52616B" }}
+              >
                 <svg
-                  className="w-5 h-5 text-white"
+                  className="w-5 h-5"
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  style={{ color: "#F0F5F9" }}
                 >
                   <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5m-15-4h12m-12 4v8m0-8l2-2m-2 2l-2-2" />
                 </svg>
@@ -56,10 +64,22 @@ export function MessageList() {
             )}
             <div
               className={`max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${
-                message.role === "user"
-                  ? "bg-linear-to-r from-cyan-600 to-cyan-700 text-white shadow-lg shadow-cyan-600/20 rounded-br-none"
-                  : "bg-slate-800/50 border border-slate-700/50 text-slate-100 rounded-bl-none"
+                message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
               }`}
+              style={
+                message.role === "user"
+                  ? {
+                      backgroundColor: "#52616B",
+                      color: "#F0F5F9",
+                      boxShadow: "0 4px 12px rgba(82, 97, 107, 0.15)",
+                    }
+                  : {
+                      backgroundColor: "rgba(82, 97, 107, 0.15)",
+                      color: "#F0F5F9",
+                      borderColor: "rgba(82, 97, 107, 0.3)",
+                      borderWidth: "1px",
+                    }
+              }
             >
               {message.content}
             </div>
@@ -69,31 +89,44 @@ export function MessageList() {
 
       {isAiThinking && (
         <div className="flex justify-start gap-4">
-          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-cyan-600 to-cyan-700 flex items-center justify-center shrink-0">
+          <div
+            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+            style={{ backgroundColor: "#52616B" }}
+          >
             <svg
-              className="w-5 h-5 text-white"
+              className="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 20 20"
+              style={{ color: "#F0F5F9" }}
             >
               <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5m-15-4h12m-12 4v8m0-8l2-2m-2 2l-2-2" />
             </svg>
           </div>
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl rounded-bl-none px-6 py-4 flex items-center gap-2">
+          <div
+            className="rounded-2xl rounded-bl-none px-6 py-4 flex items-center gap-2"
+            style={{
+              backgroundColor: "rgba(82, 97, 107, 0.15)",
+              borderColor: "rgba(82, 97, 107, 0.3)",
+              borderWidth: "1px",
+            }}
+          >
             <div className="flex gap-1">
               <div
-                className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce"
-                style={{ animationDelay: "0ms" }}
+                className="w-2 h-2 rounded-full animate-bounce"
+                style={{ backgroundColor: "#52616B", animationDelay: "0ms" }}
               />
               <div
-                className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce"
-                style={{ animationDelay: "150ms" }}
+                className="w-2 h-2 rounded-full animate-bounce"
+                style={{ backgroundColor: "#52616B", animationDelay: "150ms" }}
               />
               <div
-                className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce"
-                style={{ animationDelay: "300ms" }}
+                className="w-2 h-2 rounded-full animate-bounce"
+                style={{ backgroundColor: "#52616B", animationDelay: "300ms" }}
               />
             </div>
-            <span className="text-slate-400 text-sm ml-1">AI is thinking</span>
+            <span className="text-sm ml-1" style={{ color: "#C9D6DF" }}>
+              AI is thinking
+            </span>
           </div>
         </div>
       )}

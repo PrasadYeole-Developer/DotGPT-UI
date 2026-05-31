@@ -64,12 +64,30 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="flex w-72 flex-col border-r border-slate-800/50 bg-slate-900/50 backdrop-blur-sm">
+    <aside
+      className="flex w-72 flex-col backdrop-blur-sm"
+      style={{
+        backgroundColor: "rgba(30, 32, 34, 0.6)",
+        borderRightColor: "rgba(82, 97, 107, 0.3)",
+        borderRightWidth: "1px",
+      }}
+    >
       {/* Header */}
-      <div className="border-b border-slate-800/50 p-4 space-y-3">
+      <div
+        className="p-4 space-y-3"
+        style={{
+          borderBottomColor: "rgba(82, 97, 107, 0.3)",
+          borderBottomWidth: "1px",
+        }}
+      >
         <div className="flex items-center gap-3 px-1">
-          <div className="w-2.5 h-2.5 bg-cyan-500 rounded-full" />
-          <h2 className="text-sm font-semibold text-slate-300">ChatGPT</h2>
+          <div
+            className="w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: "#52616B" }}
+          />
+          <h2 className="text-sm font-semibold" style={{ color: "#C9D6DF" }}>
+            ChatGPT
+          </h2>
         </div>
 
         {isCreatingChat ? (
@@ -88,11 +106,23 @@ export function Sidebar() {
                   setChatTitle("");
                 }
               }}
-              className="flex-1 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+              className="flex-1 px-3 py-2 rounded-lg text-sm text-white outline-none placeholder:text-[#52616B] transition-all"
+              style={{
+                backgroundColor: "rgba(82, 97, 107, 0.2)",
+                borderColor: "#52616B",
+                borderWidth: "1px",
+              }}
             />
             <button
               onClick={handleCreateNewChat}
-              className="px-3 py-2 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-700 transition-colors cursor-pointer"
+              className="px-3 py-2 rounded-lg text-white text-sm font-medium cursor-pointer transition-colors"
+              style={{ backgroundColor: "#52616B" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#6B7D8A";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#52616B";
+              }}
             >
               ✓
             </button>
@@ -100,7 +130,7 @@ export function Sidebar() {
         ) : (
           <button
             onClick={() => setIsCreatingChat(true)}
-            className="w-full btn-primary-white py-2.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all cursor-pointer"
+            className="w-full btn-primary-light py-2.5 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all cursor-pointer"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5m-15-4h12m-12 4v8m0-8l2-2m-2 2l-2-2" />
@@ -113,7 +143,10 @@ export function Sidebar() {
       {/* Chat list */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {chats.length === 0 ? (
-          <div className="text-center py-8 text-slate-500 text-sm">
+          <div
+            className="text-center py-8 text-sm"
+            style={{ color: "#52616B" }}
+          >
             <p>No chats yet</p>
             <p className="text-xs mt-1">Create one to get started</p>
           </div>
@@ -123,11 +156,33 @@ export function Sidebar() {
               key={chat.id}
               onClick={() => handleSelectChat(chat.id)}
               className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${
-                activeChat?.id === chat.id
-                  ? "bg-cyan-600/20 border border-cyan-500/30 text-cyan-300"
-                  : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-300"
+                activeChat?.id === chat.id ? "border" : ""
               }`}
               title={chat.title}
+              style={
+                activeChat?.id === chat.id
+                  ? {
+                      backgroundColor: "rgba(82, 97, 107, 0.25)",
+                      borderColor: "#52616B",
+                      color: "#F0F5F9",
+                    }
+                  : {
+                      color: "#C9D6DF",
+                    }
+              }
+              onMouseEnter={(e) => {
+                if (activeChat?.id !== chat.id) {
+                  e.currentTarget.style.backgroundColor =
+                    "rgba(82, 97, 107, 0.15)";
+                  e.currentTarget.style.color = "#F0F5F9";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeChat?.id !== chat.id) {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = "#C9D6DF";
+                }
+              }}
             >
               <span className="block truncate">{chat.title}</span>
             </button>
@@ -136,20 +191,38 @@ export function Sidebar() {
       </div>
 
       {/* User profile */}
-      <div className="border-t border-slate-800/50 p-4 space-y-3">
+      <div
+        className="p-4 space-y-3"
+        style={{
+          borderTopColor: "rgba(82, 97, 107, 0.3)",
+          borderTopWidth: "1px",
+        }}
+      >
         <div className="glass rounded-xl p-4 space-y-3">
           <div>
-            <p className="text-sm font-semibold text-slate-50">
+            <p className="text-sm font-semibold" style={{ color: "#F0F5F9" }}>
               {user?.name.firstName} {user?.name.lastName}
             </p>
-            <p className="text-xs text-slate-500 mt-1 truncate">
+            <p className="text-xs mt-1 truncate" style={{ color: "#52616B" }}>
               {user?.email}
             </p>
           </div>
 
           <button
             onClick={handleLogout}
-            className="w-full px-3 py-2 rounded-lg bg-red-600/20 border border-red-500/30 text-red-400 text-sm font-medium hover:bg-red-600/30 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer transition-colors"
+            style={{
+              backgroundColor: "rgba(159, 86, 86, 0.15)",
+              borderColor: "rgba(159, 86, 86, 0.3)",
+              borderWidth: "1px",
+              color: "#D97373",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(159, 86, 86, 0.25)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(159, 86, 86, 0.15)";
+            }}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path

@@ -38,14 +38,26 @@ export function ChatPage() {
   }, [setChats]);
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-50">
+    <div
+      className="flex h-screen"
+      style={{ backgroundColor: "#1E2022", color: "#F0F5F9" }}
+    >
       <Sidebar />
       <div className="flex flex-1 flex-col">
         {/* Header */}
-        <header className="border-b border-slate-800/50 px-8 py-4 backdrop-blur-sm">
+        <header
+          className="px-8 py-4 backdrop-blur-sm"
+          style={{
+            borderBottomColor: "rgba(82, 97, 107, 0.3)",
+            borderBottomWidth: "1px",
+          }}
+        >
           <div className="flex items-center gap-3">
-            <div className="w-2.5 h-2.5 bg-cyan-500 rounded-full animate-pulse" />
-            <h1 className="text-lg font-semibold text-slate-50">ChatGPT AI</h1>
+            <div
+              className="w-2.5 h-2.5 rounded-full animate-pulse"
+              style={{ backgroundColor: "#52616B" }}
+            />
+            <h1 className="text-lg font-semibold">ChatGPT AI</h1>
           </div>
         </header>
 

@@ -10,13 +10,9 @@ export function ChatInput() {
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!message.trim()) {
-      return;
-    }
+    if (!message.trim()) return;
 
-    if (!activeChat) {
-      return;
-    }
+    if (!activeChat) return;
 
     const messagePayload = {
       chat: activeChat.id,
@@ -27,30 +23,51 @@ export function ChatInput() {
       ...messagePayload,
       role: "user",
     });
+
     setIsAiThinking(true);
+
     socket.emit("ai-message", messagePayload);
+
     setMessage("");
   };
 
   return (
     <form
       onSubmit={handleSendMessage}
-      className="border-t border-slate-800/50 backdrop-blur-sm p-6"
+      className="border-t p-6"
+      style={{
+        borderColor: "rgba(82, 97, 107, 0.3)",
+        backgroundColor: "#1E2022",
+      }}
     >
-      <div className="flex items-end gap-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 p-4 focus-within:border-cyan-500/50 transition-colors duration-200">
+      <div
+        className="flex items-end gap-4 rounded-2xl border p-4 transition-colors duration-200"
+        style={{
+          backgroundColor: "rgba(82, 97, 107, 0.12)",
+          borderColor: "rgba(82, 97, 107, 0.3)",
+        }}
+      >
         <textarea
           rows={1}
           placeholder="Message AI..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           disabled={isAiThinking}
-          className="max-h-40 flex-1 resize-none bg-transparent text-base text-white outline-none placeholder:text-slate-500 font-medium disabled:opacity-50"
+          className="max-h-40 flex-1 resize-none bg-transparent text-base outline-none font-medium disabled:opacity-50"
+          style={{
+            color: "#F0F5F9",
+          }}
         />
 
         <button
           type="submit"
           disabled={isAiThinking || !message.trim()}
-          className="btn-primary-cyan px-6 py-2.5 text-base font-semibold shadow-lg shadow-cyan-600/20 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
+          className="px-6 py-2.5 text-base font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
+          style={{
+            backgroundColor: "#52616B",
+            color: "#F0F5F9",
+            boxShadow: "0 4px 12px rgba(82, 97, 107, 0.25)",
+          }}
         >
           {isAiThinking ? (
             <>
@@ -62,12 +79,14 @@ export function ChatInput() {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z" />
               </svg>
+
               <span>Send</span>
             </>
           )}
         </button>
       </div>
-      <p className="text-xs text-slate-500 mt-3 text-center">
+
+      <p className="text-xs mt-3 text-center" style={{ color: "#52616B" }}>
         Press Enter to send • Shift+Enter for new line
       </p>
     </form>

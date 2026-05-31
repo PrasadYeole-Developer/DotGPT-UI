@@ -1,14 +1,23 @@
 export function App() {
   return (
-    <div className="flex h-screen items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div
+      className="flex h-screen items-center justify-center"
+      style={{ backgroundColor: "#1E2022" }}
+    >
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-cyan-600/20 rounded-2xl mb-6">
-          <div className="w-12 h-12 bg-linear-to-br from-cyan-500 to-cyan-600 rounded-xl" />
+        <div
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
+          style={{ backgroundColor: "rgba(82, 97, 107, 0.15)" }}
+        >
+          <div
+            className="w-12 h-12 rounded-xl"
+            style={{ backgroundColor: "#52616B" }}
+          />
         </div>
-        <h1 className="text-5xl font-bold bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+        <h1 className="text-5xl font-bold" style={{ color: "#F0F5F9" }}>
           ChatGPT UI
         </h1>
-        <p className="text-slate-400 text-lg font-light">
+        <p className="text-lg font-light" style={{ color: "#C9D6DF" }}>
           Modern AI Chat Interface
         </p>
       </div>

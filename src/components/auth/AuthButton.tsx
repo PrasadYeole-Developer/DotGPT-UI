@@ -13,11 +13,11 @@ export function AuthButton({
     <button
       type={type}
       disabled={isLoading}
-      className="w-full btn-primary-white py-3 text-base font-semibold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed"
+      className="w-full btn-primary-light py-3 text-base font-semibold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed"
     >
       {isLoading ? (
         <span className="flex items-center justify-center gap-2">
-          <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+          <span className="w-4 h-4 border-2 border-[#1E2022] border-t-transparent rounded-full animate-spin" />
           Loading...
         </span>
       ) : (

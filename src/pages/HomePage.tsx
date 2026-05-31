@@ -4,17 +4,24 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-12">
+    <div
+      className="flex min-h-screen flex-col items-center justify-center px-4 py-12"
+      style={{ backgroundColor: "#1E2022" }}
+    >
       {/* Hero Section */}
       <div className="max-w-2xl space-y-8 text-center">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-cyan-600 to-cyan-700 rounded-3xl shadow-lg shadow-cyan-600/20">
+          <div
+            className="inline-flex items-center justify-center w-20 h-20 rounded-3xl shadow-lg"
+            style={{ backgroundColor: "#52616B" }}
+          >
             <svg
-              className="w-10 h-10 text-white"
+              className="w-10 h-10"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              style={{ color: "#F0F5F9" }}
             >
               <path
                 strokeLinecap="round"
@@ -28,12 +35,16 @@ export const HomePage = () => {
 
         {/* Heading */}
         <div className="space-y-4">
-          <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">
-            <span className="bg-linear-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Chat with AI
-            </span>
+          <h1
+            className="text-5xl sm:text-6xl font-bold tracking-tight"
+            style={{ color: "#F0F5F9" }}
+          >
+            Chat with AI
           </h1>
-          <p className="text-xl sm:text-2xl text-slate-400 font-light leading-relaxed">
+          <p
+            className="text-xl sm:text-2xl font-light leading-relaxed"
+            style={{ color: "#C9D6DF" }}
+          >
             Experience intelligent conversations with our modern AI chat
             interface
           </p>
@@ -51,8 +62,12 @@ export const HomePage = () => {
               className="glass rounded-2xl p-4 space-y-2"
             >
               <div className="text-2xl">{feature.icon}</div>
-              <h3 className="font-semibold text-slate-50">{feature.title}</h3>
-              <p className="text-sm text-slate-500">{feature.desc}</p>
+              <h3 className="font-semibold" style={{ color: "#F0F5F9" }}>
+                {feature.title}
+              </h3>
+              <p className="text-sm" style={{ color: "#C9D6DF" }}>
+                {feature.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -61,21 +76,27 @@ export const HomePage = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <button
             onClick={() => navigate("/register")}
-            className="btn-primary-white px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+            className="btn-primary-light px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
             Get Started
           </button>
           <button
             onClick={() => navigate("/login")}
-            className="btn-primary-cyan px-8 py-3 text-lg shadow-lg shadow-cyan-600/20 hover:shadow-xl transition-all duration-300 cursor-pointer"
+            className="btn-primary-accent px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
             Sign In
           </button>
         </div>
       </div>
 
-      {/* Bottom linear accent */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-linear-to-t from-cyan-600/10 to-transparent rounded-full blur-3xl -z-10" />
+      {/* Bottom accent */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full blur-3xl -z-10"
+        style={{
+          backgroundImage:
+            "linear-gradient(to top, rgba(82, 97, 107, 0.1), transparent)",
+        }}
+      />
     </div>
   );
 };
