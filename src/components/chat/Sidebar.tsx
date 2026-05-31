@@ -43,6 +43,9 @@ export function Sidebar() {
                         <button
                             key={chat.id}
                             onClick={() => {
+                                if (activeChat?.id === chat.id) {
+                                    return;
+                                }
                                 setActiveChat(chat);
                                 setMessages([]);
                             }}

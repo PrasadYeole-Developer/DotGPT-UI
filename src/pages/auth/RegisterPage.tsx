@@ -78,12 +78,12 @@ export function RegisterPage() {
                         }
                     />
 
-                    <AuthButton text="Login" />
+                    <AuthButton text="Register" />
                 </form>
                 <AuthRedirectLink
-                    text="Don't have an account?"
-                    linkText="Register"
-                    to="/register"
+                    text="Already have an account?"
+                    linkText="Login"
+                    to="/login"
                 />
             </div>
         </div>
