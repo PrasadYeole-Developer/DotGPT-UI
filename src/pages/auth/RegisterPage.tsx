@@ -1,3 +1,4 @@
+import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
 
 export function RegisterPage() {
@@ -16,54 +17,30 @@ export function RegisterPage() {
 
                 <form className="space-y-5">
                     <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="mb-2 block text-sm text-zinc-300">
-                                First Name
-                            </label>
+                        <AuthInput
+                            label="First Name"
+                            type="text"
+                            placeholder="John"
+                        />
 
-                            <input
-                                type="text"
-                                placeholder="John"
-                                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="mb-2 block text-sm text-zinc-300">
-                                Last Name
-                            </label>
-
-                            <input
-                                type="text"
-                                placeholder="Doe"
-                                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="mb-2 block text-sm text-zinc-300">
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
+                        <AuthInput
+                            label="Last Name"
+                            type="text"
+                            placeholder="Doe"
                         />
                     </div>
 
-                    <div>
-                        <label className="mb-2 block text-sm text-zinc-300">
-                            Password
-                        </label>
+                    <AuthInput
+                        label="Email"
+                        type="email"
+                        placeholder="Enter your email"
+                    />
 
-                        <input
-                            type="password"
-                            placeholder="Create a password"
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
-                        />
-                    </div>
+                    <AuthInput
+                        label="Password"
+                        type="password"
+                        placeholder="Create a password"
+                    />
 
                     <button
                         type="submit"
