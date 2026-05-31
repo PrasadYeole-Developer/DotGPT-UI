@@ -6,7 +6,7 @@ export const HomePage = () => {
   return (
     <div
       className="flex min-h-screen flex-col items-center justify-center px-4 py-12"
-      style={{ backgroundColor: "#1E2022" }}
+      style={{ backgroundColor: "#0B0D0F" }}
     >
       {/* Hero Section */}
       <div className="max-w-2xl space-y-8 text-center">

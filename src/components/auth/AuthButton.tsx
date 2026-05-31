@@ -17,7 +17,7 @@ export function AuthButton({
     >
       {isLoading ? (
         <span className="flex items-center justify-center gap-2">
-          <span className="w-4 h-4 border-2 border-[#1E2022] border-t-transparent rounded-full animate-spin" />
+          <span className="w-4 h-4 border-2 border-[#0B0D0F] border-t-transparent rounded-full animate-spin" />
           Loading...
         </span>
       ) : (

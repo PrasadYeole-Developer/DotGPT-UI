@@ -37,7 +37,7 @@ export function ChatInput() {
       className="border-t p-6"
       style={{
         borderColor: "rgba(82, 97, 107, 0.3)",
-        backgroundColor: "#1E2022",
+        backgroundColor: "#0B0D0F",
       }}
     >
       <div
@@ -52,6 +52,12 @@ export function ChatInput() {
           placeholder="Message AI..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e as any);
+            }
+          }}
           disabled={isAiThinking}
           className="max-h-40 flex-1 resize-none bg-transparent text-base outline-none font-medium disabled:opacity-50"
           style={{

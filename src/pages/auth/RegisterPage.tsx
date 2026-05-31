@@ -44,7 +44,7 @@ export function RegisterPage() {
   return (
     <div
       className="flex min-h-screen items-center justify-center px-4 py-8"
-      style={{ backgroundColor: "#1E2022" }}
+      style={{ backgroundColor: "#0B0D0F" }}
     >
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">

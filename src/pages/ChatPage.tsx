@@ -40,7 +40,7 @@ export function ChatPage() {
   return (
     <div
       className="flex h-screen"
-      style={{ backgroundColor: "#1E2022", color: "#F0F5F9" }}
+      style={{ backgroundColor: "#0B0D0F", color: "#F0F5F9" }}
     >
       <Sidebar />
       <div className="flex flex-1 flex-col">

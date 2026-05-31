@@ -2,7 +2,7 @@ export function App() {
   return (
     <div
       className="flex h-screen items-center justify-center"
-      style={{ backgroundColor: "#1E2022" }}
+      style={{ backgroundColor: "#0B0D0F" }}
     >
       <div className="text-center space-y-3">
         <div
