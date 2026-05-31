@@ -2,12 +2,37 @@ import { useState } from "react";
 import { AuthButton } from "../../components/auth/AuthButton";
 import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
+import { useAuthStore } from "../../store/auth.store";
+import { loginUser } from "../../services/auth.service";
 
 export function LoginPage() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+    const handleLogin = async (
+        e: React.FormEvent<HTMLFormElement>,
+    ) => {
+        e.preventDefault();
+
+        try {
+            setIsLoading(true);
+
+            const response = await loginUser({
+                email: formData.email,
+                password: formData.password,
+            });
+
+            setUser(response.user);
+
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const { setUser, setIsLoading } = useAuthStore();
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
             <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg">
@@ -21,7 +46,10 @@ export function LoginPage() {
                     </p>
                 </div>
 
-                <form className="space-y-5">
+                <form
+                    onSubmit={handleLogin}
+                    className="space-y-5"
+                >
                     <AuthInput
                         label="Email"
                         type="email"
