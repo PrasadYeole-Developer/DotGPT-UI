@@ -1,3 +1,6 @@
+import { AuthInput } from "../../components/auth/AuthInput";
+import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
+
 export function LoginPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
@@ -13,29 +16,17 @@ export function LoginPage() {
                 </div>
 
                 <form className="space-y-5">
-                    <div>
-                        <label className="mb-2 block text-sm text-zinc-300">
-                            Email
-                        </label>
+                    <AuthInput
+                        label="Email"
+                        type="email"
+                        placeholder="Enter your email"
+                    />
 
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="mb-2 block text-sm text-zinc-300">
-                            Password
-                        </label>
-
-                        <input
-                            type="password"
-                            placeholder="Enter your password"
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition-all focus:border-zinc-500"
-                        />
-                    </div>
+                    <AuthInput
+                        label="Password"
+                        type="password"
+                        placeholder="Enter your password"
+                    />
 
                     <button
                         type="submit"
@@ -44,6 +35,11 @@ export function LoginPage() {
                         Login
                     </button>
                 </form>
+                <AuthRedirectLink
+                    text="Don't have an account?"
+                    linkText="Register"
+                    to="/register"
+                />
             </div>
         </div>
     );

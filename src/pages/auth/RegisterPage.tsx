@@ -1,3 +1,5 @@
+import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
+
 export function RegisterPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
@@ -70,6 +72,11 @@ export function RegisterPage() {
                         Register
                     </button>
                 </form>
+                <AuthRedirectLink
+                    text="Don't have an account?"
+                    linkText="Register"
+                    to="/register"
+                />
             </div>
         </div>
     );
