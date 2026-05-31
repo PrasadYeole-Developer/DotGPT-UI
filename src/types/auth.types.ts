@@ -25,3 +25,7 @@ export interface AuthResponse {
   message: string;
   user: User;
 }
+
+export interface LogoutResponse {
+  message: string;
+}
