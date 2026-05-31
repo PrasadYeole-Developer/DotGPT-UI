@@ -1,14 +1,31 @@
 import { useState } from "react";
+import { useChatStore } from "../../store/chat.store";
 
 export function ChatInput() {
     const [message, setMessage] = useState<string>("");
+    const {
+        activeChat,
+        addMessage,
+    } = useChatStore();
 
     const handleSendMessage = (
         e: React.FormEvent<HTMLFormElement>,
     ) => {
         e.preventDefault();
 
-        console.log(message);
+        if (!message.trim()) {
+            return;
+        }
+
+        if (!activeChat) {
+            return;
+        }
+
+        addMessage({
+            chat: activeChat.id,
+            content: message,
+            role: "user",
+        });
 
         setMessage("");
     };

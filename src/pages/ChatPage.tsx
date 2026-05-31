@@ -1,4 +1,5 @@
 import { ChatInput } from "../components/chat/ChatInput";
+import { MessageList } from "../components/chat/MessageList";
 import { Sidebar } from "../components/chat/Sidebar"
 
 export function ChatPage() {
@@ -11,12 +12,7 @@ export function ChatPage() {
                         ChatGPT AI
                     </h1>
                 </header>
-
-                <main className="flex flex-1 items-center justify-center">
-                    <h2 className="text-2xl font-medium text-zinc-400">
-                        Start a conversation
-                    </h2>
-                </main>
+                <MessageList />
                 <ChatInput />
             </div>
         </div>
