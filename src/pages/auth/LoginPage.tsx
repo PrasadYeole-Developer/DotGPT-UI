@@ -4,18 +4,22 @@ import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
 import { useAuthStore } from "../../store/auth.store";
 import { loginUser } from "../../services/auth.service";
+import type { LoginPayload } from "../../types/auth.types";
+import { AxiosError } from "axios";
 
 export function LoginPage() {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<LoginPayload>({
         email: "",
         password: "",
     });
+    const [error, setError] = useState<string>("");
     const handleLogin = async (
         e: React.FormEvent<HTMLFormElement>,
     ) => {
         e.preventDefault();
 
         try {
+            setError("");
             setIsLoading(true);
 
             const response = await loginUser({
@@ -27,12 +31,23 @@ export function LoginPage() {
 
             console.log(response);
         } catch (error) {
-            console.log(error);
+            if (error instanceof AxiosError) {
+                setError(
+                    error.response?.data?.message ||
+                    "Login failed",
+                );
+            } else {
+                setError("Something went wrong");
+            }
         } finally {
             setIsLoading(false);
         }
     };
-    const { setUser, setIsLoading } = useAuthStore();
+    const {
+        setUser,
+        setIsLoading,
+        isLoading,
+    } = useAuthStore();
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
             <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg">
@@ -75,8 +90,16 @@ export function LoginPage() {
                             })
                         }
                     />
+                    {error && (
+                        <p className="text-sm text-red-500">
+                            {error}
+                        </p>
+                    )}
 
-                    <AuthButton text="Login" />
+                    <AuthButton
+                        text="Login"
+                        isLoading={isLoading}
+                    />
                 </form>
                 <AuthRedirectLink
                     text="Don't have an account?"
