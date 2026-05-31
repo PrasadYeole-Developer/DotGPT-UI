@@ -17,6 +17,5 @@ interface GetChatsResponse {
 
 export const getChats = async (): Promise<GetChatsResponse> => {
   const response = await axiosInstance.get("/chat");
-
   return response.data;
 };

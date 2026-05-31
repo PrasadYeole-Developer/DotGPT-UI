@@ -4,9 +4,10 @@ import { MessageList } from "../components/chat/MessageList";
 import { Sidebar } from "../components/chat/Sidebar"
 import { socket } from "../services/socket";
 import { useChatStore } from "../store/chat.store";
+import { getChats } from "../services/chat.service";
 
 export function ChatPage() {
-    const { addMessage, setIsAiThinking } = useChatStore();
+    const { addMessage, setChats, setIsAiThinking } = useChatStore();
     useEffect(() => {
         socket.on(
             "ai-response",
@@ -24,6 +25,20 @@ export function ChatPage() {
             socket.off("ai-response");
         };
     }, [addMessage]);
+    useEffect(() => {
+        const loadChats = async () => {
+            try {
+                const response =
+                    await getChats();
+
+                setChats(response.chats);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        loadChats();
+    }, [setChats]);
     return (
         <div className="flex h-screen bg-zinc-950 text-white">
             <Sidebar />
