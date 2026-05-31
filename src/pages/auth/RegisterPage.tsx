@@ -2,6 +2,10 @@ import { useState } from "react";
 import { AuthButton } from "../../components/auth/AuthButton";
 import { AuthInput } from "../../components/auth/AuthInput";
 import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/auth.store";
+import { socket } from "../../services/socket";
+import { registerUser } from "../../services/auth.service";
 
 export function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -10,6 +14,35 @@ export function RegisterPage() {
         email: "",
         password: "",
     });
+    const navigate = useNavigate();
+    const { setUser } = useAuthStore();
+    const handleRegister = async (
+        e: React.FormEvent<HTMLFormElement>,
+    ) => {
+        e.preventDefault();
+
+        try {
+            const response =
+                await registerUser({
+                    email: formData.email,
+                    password: formData.password,
+                    fullName: {
+                        firstName:
+                            formData.firstName,
+                        lastName:
+                            formData.lastName,
+                    },
+                });
+
+            setUser(response.user);
+
+            socket.connect();
+
+            navigate("/chat");
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
             <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg">
@@ -23,7 +56,10 @@ export function RegisterPage() {
                     </p>
                 </div>
 
-                <form className="space-y-5">
+                <form
+                    onSubmit={handleRegister}
+                    className="space-y-5"
+                >
                     <div className="grid grid-cols-2 gap-4">
                         <AuthInput
                             label="First Name"
