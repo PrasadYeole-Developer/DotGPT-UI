@@ -35,7 +35,7 @@ export function LoginPage() {
       navigate("/chat");
     } catch (error) {
       if (error instanceof AxiosError) {
-        setError(error.response?.data?.message || "Login failed");
+        setError(error.response?.data?.message ?? "Login failed");
       } else {
         setError("Something went wrong");
       }

@@ -16,13 +16,15 @@ export function RegisterPage() {
   });
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
-  const { setUser } = useAuthStore();
+  const { setUser, setIsLoading, isLoading } = useAuthStore();
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       setError("");
+      setIsLoading(true);
+
       const response = await registerUser({
         email: formData.email,
         password: formData.password,
@@ -35,9 +37,16 @@ export function RegisterPage() {
       setUser(response.user);
       socket.connect();
       navigate("/chat");
-    } catch (error) {
-      setError("Registration failed. Please try again.");
+    } catch (error: any) {
+      setError(
+        error?.response?.data?.message ??
+        "Registration failed. Please try again."
+      );
+
       console.log(error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -151,7 +160,7 @@ export function RegisterPage() {
               </div>
             )}
 
-            <AuthButton text="Create Account" />
+            <AuthButton text="Create Account" isLoading={isLoading} />
           </form>
 
           {/* Divider */}
