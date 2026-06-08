@@ -10,6 +10,10 @@ interface AuthStore {
   setUser: (user: User | null) => void;
 
   setIsLoading: (value: boolean) => void;
+
+  isAuthChecked: boolean;
+
+  setIsAuthChecked: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -23,5 +27,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   setIsLoading: (value) => {
     set({ isLoading: value });
+  },
+
+  isAuthChecked: false,
+
+  setIsAuthChecked: (value) => {
+    set({
+      isAuthChecked: value,
+    });
   },
 }));
