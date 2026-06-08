@@ -8,6 +8,7 @@ import { RegisterPage } from './pages/auth/RegisterPage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { ChatPage } from './pages/ChatPage'
 import { AuthInitializer } from './components/auth/AuthInitializer'
+import { ProtectedRoute } from './components/auth/ProtectedRoute'
 
 const rootElement = document.getElementById("root");
 
@@ -32,7 +33,11 @@ createRoot(rootElement).render(
         />
         <Route
           path="/chat"
-          element={<ChatPage />}
+          element={
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>
