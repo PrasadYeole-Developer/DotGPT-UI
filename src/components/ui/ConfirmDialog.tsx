@@ -75,7 +75,7 @@ export function ConfirmDialog({
                         disabled={isLoading}
                         className="px-4 py-2 rounded-lg cursor-pointer disabled:opacity-50"
                         style={{
-                            backgroundColor: "#D97373",
+                            backgroundColor: "#D95353",
                             color: "#F0F5F9",
                         }}
                     >

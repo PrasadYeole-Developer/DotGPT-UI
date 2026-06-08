@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useChatStore } from "../../store/chat.store";
 import { MarkdownMessage } from "./MarkdownMessage";
+import { CopyMessageButton } from "./CopyResponseButton";
 
 export function MessageList() {
   const { messages, isAiThinking } = useChatStore();
@@ -63,7 +64,7 @@ export function MessageList() {
               </div>
             )}
             <div
-              className={`prose prose-invert max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
+              className={`max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
                 }`}
               style={
                 message.role === "user"
@@ -80,9 +81,19 @@ export function MessageList() {
                   }
               }
             >
-              <MarkdownMessage
-                content={message.content}
-              />
+              <div className="flex flex-col gap-3">
+                <MarkdownMessage
+                  content={message.content}
+                />
+
+                {message.role === "model" && (
+                  <div className="flex justify-end">
+                    <CopyMessageButton
+                      content={message.content}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))
