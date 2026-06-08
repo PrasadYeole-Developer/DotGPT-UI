@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useChatStore } from "../../store/chat.store";
+import { MarkdownMessage } from "./MarkdownMessage";
 
 export function MessageList() {
   const { messages, isAiThinking } = useChatStore();
@@ -43,9 +44,8 @@ export function MessageList() {
         messages.map((message, index) => (
           <div
             key={index}
-            className={`flex gap-4 ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
+            className={`flex gap-4 ${message.role === "user" ? "justify-end" : "justify-start"
+              }`}
           >
             {message.role === "model" && (
               <div
@@ -63,25 +63,26 @@ export function MessageList() {
               </div>
             )}
             <div
-              className={`max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${
-                message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
-              }`}
+              className={`prose prose-invert max-w-2xl rounded-2xl px-6 py-4 text-base leading-relaxed ${message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
+                }`}
               style={
                 message.role === "user"
                   ? {
-                      backgroundColor: "#52616B",
-                      color: "#F0F5F9",
-                      boxShadow: "0 4px 12px rgba(82, 97, 107, 0.15)",
-                    }
+                    backgroundColor: "#52616B",
+                    color: "#F0F5F9",
+                    boxShadow: "0 4px 12px rgba(82, 97, 107, 0.15)",
+                  }
                   : {
-                      backgroundColor: "rgba(82, 97, 107, 0.15)",
-                      color: "#F0F5F9",
-                      borderColor: "rgba(82, 97, 107, 0.3)",
-                      borderWidth: "1px",
-                    }
+                    backgroundColor: "rgba(82, 97, 107, 0.15)",
+                    color: "#F0F5F9",
+                    borderColor: "rgba(82, 97, 107, 0.3)",
+                    borderWidth: "1px",
+                  }
               }
             >
-              {message.content}
+              <MarkdownMessage
+                content={message.content}
+              />
             </div>
           </div>
         ))
@@ -124,9 +125,6 @@ export function MessageList() {
                 style={{ backgroundColor: "#52616B", animationDelay: "300ms" }}
               />
             </div>
-            <span className="text-sm ml-1" style={{ color: "#C9D6DF" }}>
-              AI is thinking
-            </span>
           </div>
         </div>
       )}

@@ -22,7 +22,7 @@ export function ConfirmDialog({
     return createPortal(
         <div
             className="
-        fixed inset-0 z-[9999]
+        fixed inset-0 z-9999
         bg-black/60 backdrop-blur-sm
         flex justify-center
         items-center
