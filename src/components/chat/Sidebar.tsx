@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { createChat, deleteChat } from "../../services/chat.service";
+import { createChat, deleteChat, renameChat } from "../../services/chat.service";
 import { getMessagesByChat } from "../../services/message.service";
 import { useAuthStore } from "../../store/auth.store";
 import { useChatStore } from "../../store/chat.store";
 import { socket } from "../../services/socket";
 import { logoutUser } from "../../services/auth.service";
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { ConfirmDialog } from "../ui/ConfirmDialog";
 
 export function Sidebar() {
@@ -17,6 +17,8 @@ export function Sidebar() {
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [isDeletingChat, setIsDeletingChat] = useState<boolean>(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState<string>("");
   const { chats, activeChat, setChats, setActiveChat, setMessages } =
     useChatStore();
   const { user, setUser } = useAuthStore();
@@ -98,6 +100,36 @@ export function Sidebar() {
       console.log(error);
     } finally {
       setIsDeletingChat(false);
+    }
+  };
+
+  const handleRenameChat = async () => {
+    if (!editingChatId || !editingTitle.trim()) {
+      return;
+    }
+
+    try {
+      const response = await renameChat(
+        editingChatId,
+        editingTitle,
+      );
+
+      const updatedChats = chats.map((chat) =>
+        chat.id === editingChatId
+          ? response.chat
+          : chat
+      );
+
+      setChats(updatedChats);
+
+      if (activeChat?.id === editingChatId) {
+        setActiveChat(response.chat);
+      }
+
+      setEditingChatId(null);
+      setEditingTitle("");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -224,7 +256,48 @@ export function Sidebar() {
                   }
                 }}
               >
-                <span className="block truncate">{chat.title}</span>
+                {editingChatId === chat.id ? (
+                  <input
+                    autoFocus
+                    value={editingTitle}
+                    onChange={(e) =>
+                      setEditingTitle(e.target.value)
+                    }
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleRenameChat();
+                      }
+
+                      if (e.key === "Escape") {
+                        setEditingChatId(null);
+                        setEditingTitle("");
+                      }
+                    }}
+                    className="w-full bg-transparent outline-none"
+                    style={{
+                      color: "#F0F5F9",
+                    }}
+                  />
+                ) : (
+                  <span className="block truncate flex items-center justify-between">
+                    {chat.title}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        setEditingChatId(chat.id);
+                        setEditingTitle(chat.title);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer shrink-0 p-1 rounded-lg hover:bg-white/10"
+                      style={{
+                        color: "#C9D6DF",
+                      }}
+                    >
+                      <MdEdit />
+                    </button>
+                  </span>
+                )}
               </button>
 
               <button
