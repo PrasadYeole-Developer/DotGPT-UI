@@ -32,3 +32,8 @@ export interface GetChatsResponse {
 export interface DeleteChatResponse {
   message: string;
 }
+
+export interface RenameChatResponse {
+  message: string;
+  chat: Chat;
+}
