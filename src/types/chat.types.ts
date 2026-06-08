@@ -5,6 +5,7 @@ export interface Chat {
   title: string;
   lastActivity: string;
   userId: string;
+  isTemporary?: boolean;
 }
 
 export interface Message {

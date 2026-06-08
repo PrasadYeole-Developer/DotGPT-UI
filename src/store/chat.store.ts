@@ -12,6 +12,8 @@ interface ChatStore {
   setMessages: (messages: Message[]) => void;
   addMessage: (message: Message) => void;
   setIsAiThinking: (value: boolean) => void;
+  isTemporaryChat: boolean;
+  setIsTemporaryChat: (value: boolean) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -42,6 +44,12 @@ export const useChatStore = create<ChatStore>((set) => ({
   setIsAiThinking: (value) => {
     set({
       isAiThinking: value,
+    });
+  },
+  isTemporaryChat: false,
+  setIsTemporaryChat: (value) => {
+    set({
+      isTemporaryChat: value,
     });
   },
 }));
