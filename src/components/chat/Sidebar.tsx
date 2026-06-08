@@ -7,12 +7,16 @@ import { socket } from "../../services/socket";
 import { logoutUser } from "../../services/auth.service";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { ConfirmDialog } from "../ui/ConfirmDialog";
 
 export function Sidebar() {
   const navigate = useNavigate();
   const [isCreatingChat, setIsCreatingChat] = useState<boolean>(false);
   const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
   const [chatTitle, setChatTitle] = useState<string>("");
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const [isDeletingChat, setIsDeletingChat] = useState<boolean>(false);
   const { chats, activeChat, setChats, setActiveChat, setMessages } =
     useChatStore();
   const { user, setUser } = useAuthStore();
@@ -69,22 +73,31 @@ export function Sidebar() {
     }
   };
 
-  const handleDeleteChat = async (chatId: string) => {
+  const handleDeleteChat = async () => {
+    if (!selectedChatId) return;
+
     try {
-      await deleteChat(chatId);
+      setIsDeletingChat(true);
+
+      await deleteChat(selectedChatId);
 
       const updatedChats = chats.filter(
-        (chat) => chat.id !== chatId,
+        (chat) => chat.id !== selectedChatId,
       );
 
       setChats(updatedChats);
 
-      if (activeChat?.id === chatId) {
+      if (activeChat?.id === selectedChatId) {
         setActiveChat(null);
         setMessages([]);
       }
+
+      setShowDeleteDialog(false);
+      setSelectedChatId(null);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsDeletingChat(false);
     }
   };
 
@@ -217,7 +230,8 @@ export function Sidebar() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDeleteChat(chat.id);
+                  setSelectedChatId(chat.id);
+                  setShowDeleteDialog(true);
                 }}
                 className="opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer shrink-0 p-2 rounded-lg hover:bg-red-300/10"
                 style={{
@@ -277,6 +291,17 @@ export function Sidebar() {
           </button>
         </div>
       </div>
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        title="Delete Chat"
+        description="This chat will be permanently deleted along with all of its messages. This action cannot be undone."
+        isLoading={isDeletingChat}
+        onCancel={() => {
+          setShowDeleteDialog(false);
+          setSelectedChatId(null);
+        }}
+        onConfirm={handleDeleteChat}
+      />
     </aside>
   );
 }
