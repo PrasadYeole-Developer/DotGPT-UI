@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { ChatPage } from './pages/ChatPage'
+import { AuthInitializer } from './components/auth/AuthInitializer'
 
 const rootElement = document.getElementById("root");
 
@@ -17,6 +18,7 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
+      <AuthInitializer />
       <Routes>
         <Route path="/" element={<App />} />
         <Route index element={<HomePage />} />
