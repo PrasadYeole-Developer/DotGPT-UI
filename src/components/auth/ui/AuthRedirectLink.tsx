@@ -16,17 +16,11 @@ export function AuthRedirectLink({
       {text}{" "}
       <Link
         to={to}
-        className="font-semibold transition-colors duration-200 cursor-pointer"
-        style={{ color: "#52616B" }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = "#6B7D8A";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = "#52616B";
-        }}
+        className="font-semibold transition-colors duration-200 cursor-pointer text-[#52616B] hover:text-[#6B7D8A]"
       >
         {linkText}
       </Link>
+ 
     </p>
   );
 }

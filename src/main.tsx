@@ -7,6 +7,9 @@ import { HomePage } from './pages/HomePage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { ChatPage } from './pages/ChatPage'
+import { AuthInitializer } from './components/auth/AuthInitializer'
+import { ProtectedRoute } from './components/auth/ProtectedRoute'
+import { PublicRoute } from './components/auth/PublicRoute'
 
 const rootElement = document.getElementById("root");
 
@@ -17,20 +20,33 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
+      <AuthInitializer />
       <Routes>
         <Route path="/" element={<App />} />
         <Route index element={<HomePage />} />
         <Route
           path="/register"
-          element={<RegisterPage />}
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/login"
-          element={<LoginPage />}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/chat"
-          element={<ChatPage />}
+          element={
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>

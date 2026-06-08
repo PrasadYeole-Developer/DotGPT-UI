@@ -24,3 +24,16 @@ export interface AIResponse {
   content: string;
   chat: string;
 }
+
+export interface GetChatsResponse {
+  chats: Chat[];
+}
+
+export interface DeleteChatResponse {
+  message: string;
+}
+
+export interface RenameChatResponse {
+  message: string;
+  chat: Chat;
+}

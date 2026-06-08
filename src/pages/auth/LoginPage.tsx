@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { AuthButton } from "../../components/auth/AuthButton";
-import { AuthInput } from "../../components/auth/AuthInput";
-import { AuthRedirectLink } from "../../components/auth/AuthRedirectLink";
+import { AuthButton } from "../../components/auth/ui/AuthButton";
+import { AuthInput } from "../../components/auth/ui/AuthInput";
+import { AuthRedirectLink } from "../../components/auth/ui/AuthRedirectLink";
 import { useAuthStore } from "../../store/auth.store";
 import { loginUser } from "../../services/auth.service";
 import type { LoginPayload } from "../../types/auth.types";
@@ -35,10 +35,11 @@ export function LoginPage() {
       navigate("/chat");
     } catch (error) {
       if (error instanceof AxiosError) {
-        setError(error.response?.data?.message || "Login failed");
+        setError(error.response?.data?.message ?? "Login failed");
       } else {
         setError("Something went wrong");
       }
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

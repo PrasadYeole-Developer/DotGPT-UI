@@ -1,22 +1,36 @@
 import { useNavigate } from "react-router-dom";
-import { createChat } from "../../services/chat.service";
+import { createChat, deleteChat, renameChat } from "../../services/chat.service";
 import { getMessagesByChat } from "../../services/message.service";
 import { useAuthStore } from "../../store/auth.store";
 import { useChatStore } from "../../store/chat.store";
 import { socket } from "../../services/socket";
 import { logoutUser } from "../../services/auth.service";
 import { useState } from "react";
+import { MdDelete, MdEdit } from "react-icons/md";
+import { ConfirmDialog } from "../ui/ConfirmDialog";
 
 export function Sidebar() {
   const navigate = useNavigate();
   const [isCreatingChat, setIsCreatingChat] = useState<boolean>(false);
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
   const [chatTitle, setChatTitle] = useState<string>("");
-  const { chats, activeChat, setChats, setActiveChat, setMessages } =
-    useChatStore();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const [isDeletingChat, setIsDeletingChat] = useState<boolean>(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState<string>("");
+  const { chats, activeChat, setChats, setActiveChat, setMessages } = useChatStore();
+  const filteredChats = chats.filter((chat) =>
+    chat.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
   const { user, setUser } = useAuthStore();
 
   const handleLogout = async () => {
     try {
+      setIsLoggingOut(true);
       await logoutUser();
       socket.disconnect();
       setUser(null);
@@ -26,6 +40,9 @@ export function Sidebar() {
       navigate("/login");
     } catch (error) {
       console.log(error);
+    }
+    finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -58,6 +75,64 @@ export function Sidebar() {
         const response = await getMessagesByChat(chatId);
         setMessages(response.messages);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteChat = async () => {
+    if (!selectedChatId) return;
+
+    try {
+      setIsDeletingChat(true);
+
+      await deleteChat(selectedChatId);
+
+      const updatedChats = chats.filter(
+        (chat) => chat.id !== selectedChatId,
+      );
+
+      setChats(updatedChats);
+
+      if (activeChat?.id === selectedChatId) {
+        setActiveChat(null);
+        setMessages([]);
+      }
+
+      setShowDeleteDialog(false);
+      setSelectedChatId(null);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsDeletingChat(false);
+    }
+  };
+
+  const handleRenameChat = async () => {
+    if (!editingChatId || !editingTitle.trim()) {
+      return;
+    }
+
+    try {
+      const response = await renameChat(
+        editingChatId,
+        editingTitle,
+      );
+
+      const updatedChats = chats.map((chat) =>
+        chat.id === editingChatId
+          ? response.chat
+          : chat
+      );
+
+      setChats(updatedChats);
+
+      if (activeChat?.id === editingChatId) {
+        setActiveChat(response.chat);
+      }
+
+      setEditingChatId(null);
+      setEditingTitle("");
     } catch (error) {
       console.log(error);
     }
@@ -138,6 +213,27 @@ export function Sidebar() {
             New Chat
           </button>
         )}
+        <input
+          type="text"
+          placeholder="Search chats..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="
+    w-full
+    px-3
+    py-2
+    rounded-lg
+    text-sm
+    text-white
+    outline-none
+    placeholder:text-[#52616B]
+  "
+          style={{
+            backgroundColor: "rgba(82, 97, 107, 0.2)",
+            borderColor: "#52616B",
+            borderWidth: "1px",
+          }}
+        />
       </div>
 
       {/* Chat list */}
@@ -151,41 +247,99 @@ export function Sidebar() {
             <p className="text-xs mt-1">Create one to get started</p>
           </div>
         ) : (
-          chats.map((chat) => (
-            <button
+          filteredChats.map((chat) => (
+            <div
               key={chat.id}
-              onClick={() => handleSelectChat(chat.id)}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${
-                activeChat?.id === chat.id ? "border" : ""
-              }`}
-              title={chat.title}
-              style={
-                activeChat?.id === chat.id
-                  ? {
+              className="group flex items-center gap-2"
+            >
+              <button
+                onClick={() => handleSelectChat(chat.id)}
+                className={`flex-1 text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${activeChat?.id === chat.id ? "border" : ""
+                  }`}
+                title={chat.title}
+                style={
+                  activeChat?.id === chat.id
+                    ? {
                       backgroundColor: "rgba(82, 97, 107, 0.25)",
                       borderColor: "#52616B",
                       color: "#F0F5F9",
                     }
-                  : {
+                    : {
                       color: "#C9D6DF",
                     }
-              }
-              onMouseEnter={(e) => {
-                if (activeChat?.id !== chat.id) {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(82, 97, 107, 0.15)";
-                  e.currentTarget.style.color = "#F0F5F9";
                 }
-              }}
-              onMouseLeave={(e) => {
-                if (activeChat?.id !== chat.id) {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#C9D6DF";
-                }
-              }}
-            >
-              <span className="block truncate">{chat.title}</span>
-            </button>
+                onMouseEnter={(e) => {
+                  if (activeChat?.id !== chat.id) {
+                    e.currentTarget.style.backgroundColor =
+                      "rgba(82, 97, 107, 0.15)";
+                    e.currentTarget.style.color = "#F0F5F9";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeChat?.id !== chat.id) {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.color = "#C9D6DF";
+                  }
+                }}
+              >
+                {editingChatId === chat.id ? (
+                  <input
+                    autoFocus
+                    value={editingTitle}
+                    onChange={(e) =>
+                      setEditingTitle(e.target.value)
+                    }
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleRenameChat();
+                      }
+
+                      if (e.key === "Escape") {
+                        setEditingChatId(null);
+                        setEditingTitle("");
+                      }
+                    }}
+                    className="w-full bg-transparent outline-none"
+                    style={{
+                      color: "#F0F5F9",
+                    }}
+                  />
+                ) : (
+                  <span className="block truncate flex items-center justify-between">
+                    {chat.title}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        setEditingChatId(chat.id);
+                        setEditingTitle(chat.title);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer shrink-0 p-1 rounded-lg hover:bg-white/10"
+                      style={{
+                        color: "#C9D6DF",
+                      }}
+                    >
+                      <MdEdit />
+                    </button>
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedChatId(chat.id);
+                  setShowDeleteDialog(true);
+                }}
+                className="opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer shrink-0 p-2 rounded-lg hover:bg-red-300/10"
+                style={{
+                  color: "#D97373",
+                }}
+              >
+                <MdDelete />
+              </button>
+            </div>
           ))
         )}
       </div>
@@ -210,7 +364,8 @@ export function Sidebar() {
 
           <button
             onClick={handleLogout}
-            className="w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer transition-colors"
+            disabled={isLoggingOut}
+            className="w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               backgroundColor: "rgba(159, 86, 86, 0.15)",
               borderColor: "rgba(159, 86, 86, 0.3)",
@@ -235,6 +390,17 @@ export function Sidebar() {
           </button>
         </div>
       </div>
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        title="Delete Chat"
+        description="This chat will be permanently deleted along with all of its messages. This action cannot be undone."
+        isLoading={isDeletingChat}
+        onCancel={() => {
+          setShowDeleteDialog(false);
+          setSelectedChatId(null);
+        }}
+        onConfirm={handleDeleteChat}
+      />
     </aside>
   );
 }
