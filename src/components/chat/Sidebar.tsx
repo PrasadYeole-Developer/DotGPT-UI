@@ -14,13 +14,18 @@ export function Sidebar() {
   const [isCreatingChat, setIsCreatingChat] = useState<boolean>(false);
   const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
   const [chatTitle, setChatTitle] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [isDeletingChat, setIsDeletingChat] = useState<boolean>(false);
   const [editingChatId, setEditingChatId] = useState<string | null>(null);
   const [editingTitle, setEditingTitle] = useState<string>("");
-  const { chats, activeChat, setChats, setActiveChat, setMessages } =
-    useChatStore();
+  const { chats, activeChat, setChats, setActiveChat, setMessages } = useChatStore();
+  const filteredChats = chats.filter((chat) =>
+    chat.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
   const { user, setUser } = useAuthStore();
 
   const handleLogout = async () => {
@@ -208,6 +213,27 @@ export function Sidebar() {
             New Chat
           </button>
         )}
+        <input
+          type="text"
+          placeholder="Search chats..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="
+    w-full
+    px-3
+    py-2
+    rounded-lg
+    text-sm
+    text-white
+    outline-none
+    placeholder:text-[#52616B]
+  "
+          style={{
+            backgroundColor: "rgba(82, 97, 107, 0.2)",
+            borderColor: "#52616B",
+            borderWidth: "1px",
+          }}
+        />
       </div>
 
       {/* Chat list */}
@@ -221,7 +247,7 @@ export function Sidebar() {
             <p className="text-xs mt-1">Create one to get started</p>
           </div>
         ) : (
-          chats.map((chat) => (
+          filteredChats.map((chat) => (
             <div
               key={chat.id}
               className="group flex items-center gap-2"
