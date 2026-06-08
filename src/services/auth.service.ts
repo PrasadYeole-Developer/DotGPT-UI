@@ -2,6 +2,7 @@ import { axiosInstance } from "../lib/axios";
 
 import type {
   AuthResponse,
+  CurrentUserResponse,
   LoginPayload,
   LogoutResponse,
   RegisterPayload,
@@ -25,6 +26,12 @@ export const loginUser = async (
 
 export const logoutUser = async (): Promise<LogoutResponse> => {
   const response = await axiosInstance.post("/auth/logout");
+
+  return response.data;
+};
+
+export const getCurrentUser = async (): Promise<CurrentUserResponse> => {
+  const response = await axiosInstance.get("/auth/me");
 
   return response.data;
 };
