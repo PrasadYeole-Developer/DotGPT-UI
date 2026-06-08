@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { createChat } from "../../services/chat.service";
+import { createChat, deleteChat } from "../../services/chat.service";
 import { getMessagesByChat } from "../../services/message.service";
 import { useAuthStore } from "../../store/auth.store";
 import { useChatStore } from "../../store/chat.store";
 import { socket } from "../../services/socket";
 import { logoutUser } from "../../services/auth.service";
 import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 
 export function Sidebar() {
   const navigate = useNavigate();
@@ -62,6 +63,25 @@ export function Sidebar() {
         setActiveChat(chat);
         const response = await getMessagesByChat(chatId);
         setMessages(response.messages);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteChat = async (chatId: string) => {
+    try {
+      await deleteChat(chatId);
+
+      const updatedChats = chats.filter(
+        (chat) => chat.id !== chatId,
+      );
+
+      setChats(updatedChats);
+
+      if (activeChat?.id === chatId) {
+        setActiveChat(null);
+        setMessages([]);
       }
     } catch (error) {
       console.log(error);
@@ -157,39 +177,56 @@ export function Sidebar() {
           </div>
         ) : (
           chats.map((chat) => (
-            <button
+            <div
               key={chat.id}
-              onClick={() => handleSelectChat(chat.id)}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${activeChat?.id === chat.id ? "border" : ""
-                }`}
-              title={chat.title}
-              style={
-                activeChat?.id === chat.id
-                  ? {
-                    backgroundColor: "rgba(82, 97, 107, 0.25)",
-                    borderColor: "#52616B",
-                    color: "#F0F5F9",
-                  }
-                  : {
-                    color: "#C9D6DF",
-                  }
-              }
-              onMouseEnter={(e) => {
-                if (activeChat?.id !== chat.id) {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(82, 97, 107, 0.15)";
-                  e.currentTarget.style.color = "#F0F5F9";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (activeChat?.id !== chat.id) {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#C9D6DF";
-                }
-              }}
+              className="group flex items-center gap-2"
             >
-              <span className="block truncate">{chat.title}</span>
-            </button>
+              <button
+                onClick={() => handleSelectChat(chat.id)}
+                className={`flex-1 text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${activeChat?.id === chat.id ? "border" : ""
+                  }`}
+                title={chat.title}
+                style={
+                  activeChat?.id === chat.id
+                    ? {
+                      backgroundColor: "rgba(82, 97, 107, 0.25)",
+                      borderColor: "#52616B",
+                      color: "#F0F5F9",
+                    }
+                    : {
+                      color: "#C9D6DF",
+                    }
+                }
+                onMouseEnter={(e) => {
+                  if (activeChat?.id !== chat.id) {
+                    e.currentTarget.style.backgroundColor =
+                      "rgba(82, 97, 107, 0.15)";
+                    e.currentTarget.style.color = "#F0F5F9";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeChat?.id !== chat.id) {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.color = "#C9D6DF";
+                  }
+                }}
+              >
+                <span className="block truncate">{chat.title}</span>
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteChat(chat.id);
+                }}
+                className="opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer shrink-0 p-2 rounded-lg hover:bg-red-300/10"
+                style={{
+                  color: "#D97373",
+                }}
+              >
+                <MdDelete />
+              </button>
+            </div>
           ))
         )}
       </div>
