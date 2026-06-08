@@ -9,6 +9,7 @@ import { LoginPage } from './pages/auth/LoginPage'
 import { ChatPage } from './pages/ChatPage'
 import { AuthInitializer } from './components/auth/AuthInitializer'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
+import { PublicRoute } from './components/auth/PublicRoute'
 
 const rootElement = document.getElementById("root");
 
@@ -25,11 +26,19 @@ createRoot(rootElement).render(
         <Route index element={<HomePage />} />
         <Route
           path="/register"
-          element={<RegisterPage />}
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/login"
-          element={<LoginPage />}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/chat"
