@@ -42,8 +42,7 @@ export function RegisterPage() {
         error?.response?.data?.message ??
         "Registration failed. Please try again."
       );
-
-      console.log(error);
+      console.error(error);
     }
     finally {
       setIsLoading(false);

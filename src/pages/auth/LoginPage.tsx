@@ -39,6 +39,7 @@ export function LoginPage() {
       } else {
         setError("Something went wrong");
       }
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

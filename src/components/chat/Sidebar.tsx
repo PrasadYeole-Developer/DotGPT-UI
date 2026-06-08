@@ -10,6 +10,7 @@ import { useState } from "react";
 export function Sidebar() {
   const navigate = useNavigate();
   const [isCreatingChat, setIsCreatingChat] = useState<boolean>(false);
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
   const [chatTitle, setChatTitle] = useState<string>("");
   const { chats, activeChat, setChats, setActiveChat, setMessages } =
     useChatStore();
@@ -17,6 +18,7 @@ export function Sidebar() {
 
   const handleLogout = async () => {
     try {
+      setIsLoggingOut(true);
       await logoutUser();
       socket.disconnect();
       setUser(null);
@@ -26,6 +28,9 @@ export function Sidebar() {
       navigate("/login");
     } catch (error) {
       console.log(error);
+    }
+    finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -155,20 +160,19 @@ export function Sidebar() {
             <button
               key={chat.id}
               onClick={() => handleSelectChat(chat.id)}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${
-                activeChat?.id === chat.id ? "border" : ""
-              }`}
+              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 truncate cursor-pointer ${activeChat?.id === chat.id ? "border" : ""
+                }`}
               title={chat.title}
               style={
                 activeChat?.id === chat.id
                   ? {
-                      backgroundColor: "rgba(82, 97, 107, 0.25)",
-                      borderColor: "#52616B",
-                      color: "#F0F5F9",
-                    }
+                    backgroundColor: "rgba(82, 97, 107, 0.25)",
+                    borderColor: "#52616B",
+                    color: "#F0F5F9",
+                  }
                   : {
-                      color: "#C9D6DF",
-                    }
+                    color: "#C9D6DF",
+                  }
               }
               onMouseEnter={(e) => {
                 if (activeChat?.id !== chat.id) {
@@ -210,7 +214,8 @@ export function Sidebar() {
 
           <button
             onClick={handleLogout}
-            className="w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer transition-colors"
+            disabled={isLoggingOut}
+            className="w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               backgroundColor: "rgba(159, 86, 86, 0.15)",
               borderColor: "rgba(159, 86, 86, 0.3)",
