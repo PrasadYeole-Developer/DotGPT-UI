@@ -4,7 +4,7 @@ import { socket } from "../../services/socket";
 
 export function ChatInput() {
   const [message, setMessage] = useState<string>("");
-  const { activeChat, addMessage, isAiThinking, setIsAiThinking } =
+  const { activeChat, addMessage, isAiThinking, setIsAiThinking, isTemporaryChat } =
     useChatStore();
 
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,6 +17,7 @@ export function ChatInput() {
     const messagePayload = {
       chat: activeChat.id,
       content: message,
+      isTemporary: isTemporaryChat,
     };
 
     addMessage({
