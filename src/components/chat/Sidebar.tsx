@@ -161,7 +161,7 @@ export function Sidebar() {
             style={{ backgroundColor: "#52616B" }}
           />
           <h2 className="text-sm font-semibold" style={{ color: "#C9D6DF" }}>
-            ChatGPT
+            Dot-GPT
           </h2>
         </div>
 

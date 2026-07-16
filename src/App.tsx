@@ -15,7 +15,7 @@ export function App() {
           />
         </div>
         <h1 className="text-5xl font-bold" style={{ color: "#F0F5F9" }}>
-          ChatGPT UI
+          Dot-GPT UI
         </h1>
         <p className="text-lg font-light" style={{ color: "#C9D6DF" }}>
           Modern AI Chat Interface
