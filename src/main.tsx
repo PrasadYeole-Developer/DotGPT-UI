@@ -10,6 +10,9 @@ import { ChatPage } from './pages/ChatPage'
 import { AuthInitializer } from './components/auth/AuthInitializer'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { PublicRoute } from './components/auth/PublicRoute'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW();
 
 const rootElement = document.getElementById("root");
 
