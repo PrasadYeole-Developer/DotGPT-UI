@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { ChatPage } from './pages/ChatPage'
+import { ChunkingLabPage } from './pages/ChunkingLabPage'
 import { AuthInitializer } from './components/auth/AuthInitializer'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { PublicRoute } from './components/auth/PublicRoute'
@@ -59,6 +60,14 @@ createRoot(rootElement).render(
           element={
             <ProtectedRoute>
               <ChatPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/knowledge-lab"
+          element={
+            <ProtectedRoute>
+              <ChunkingLabPage />
             </ProtectedRoute>
           }
         />
