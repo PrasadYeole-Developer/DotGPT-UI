@@ -57,7 +57,7 @@ export function ChatPage() {
               className="w-2.5 h-2.5 rounded-full animate-pulse"
               style={{ backgroundColor: "#52616B" }}
             />
-            <h1 className="text-lg font-semibold">ChatGPT AI</h1>
+            <h1 className="text-lg font-semibold">Dot-GPT AI</h1>
           </div>
         </header>
 
